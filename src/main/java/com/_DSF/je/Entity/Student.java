@@ -1,9 +1,7 @@
 package com._DSF.je.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -11,8 +9,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Student {
 
     @Id
@@ -23,8 +19,8 @@ public class Student {
     private String password;
     private String email;
 
-    // Store the image as a byte array
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
 
     @ManyToMany
@@ -34,4 +30,8 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     private List<Course> courses;  // Property name matches mappedBy in Course entity
+
+    // Default constructor
+    public Student() {
+    }
 }
