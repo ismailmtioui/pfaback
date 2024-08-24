@@ -1,14 +1,14 @@
 package com._DSF.je.Entity;
 
+import com._DSF.je.Enumeration.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@MappedSuperclass
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,9 @@ public class User {
     // Store the image as a byte array
     @Lob
     private byte[] image;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     // Additional common fields for all users
 }

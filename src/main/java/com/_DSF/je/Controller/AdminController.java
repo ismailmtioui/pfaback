@@ -22,21 +22,16 @@ public class AdminController {
     public ResponseEntity<String> registerAdmin(
             @RequestParam("username") String username,
             @RequestParam("password") String password,
-            @RequestParam("email") String email,
-            @RequestParam("image") MultipartFile image) {
+            @RequestParam("email") String email) {
 
         try {
             Admin admin = new Admin();
             admin.setUsername(username);
             admin.setPassword(PasswordUtil.hashPassword(password));
             admin.setEmail(email);
-            admin.setImage(image.getBytes());
 
             adminService.registerAdmin(admin);
             return new ResponseEntity<>("Admin registered successfully", HttpStatus.CREATED);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("Error while processing the image", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);

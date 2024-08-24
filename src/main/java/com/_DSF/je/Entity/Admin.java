@@ -1,5 +1,6 @@
 package com._DSF.je.Entity;
 
+import com._DSF.je.Enumeration.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,19 +8,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Admin {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String username;
-    private String password;
-    private String email;
-
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] image;
+public class Admin extends User{
 
     // Default constructor
     public Admin() {

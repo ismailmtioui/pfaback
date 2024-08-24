@@ -9,19 +9,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class Teacher {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String username;
-    private String password;
-    private String email;
-
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] image;
+public class Teacher extends User{
 
     @OneToMany(mappedBy = "teacher")
     private Set<Course> coursesTaught;

@@ -9,19 +9,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Student {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String username;
-    private String password;
-    private String email;
-
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] image;
+public class Student extends User{
 
     @ManyToMany
     @JoinTable(

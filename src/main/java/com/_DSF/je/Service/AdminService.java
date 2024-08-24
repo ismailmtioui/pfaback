@@ -8,8 +8,12 @@ import com._DSF.je.Util.PasswordUtil;
 
 @Service
 public class AdminService {
-    @Autowired
-    private AdminRepository adminRepository;
+
+    private final AdminRepository adminRepository;
+
+    public AdminService(AdminRepository adminRepository) {
+        this.adminRepository = adminRepository;
+    }
 
     public Admin registerAdmin(Admin admin) {
         admin.setPassword(PasswordUtil.hashPassword(admin.getPassword()));

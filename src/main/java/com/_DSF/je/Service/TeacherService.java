@@ -8,8 +8,12 @@ import com._DSF.je.Util.PasswordUtil;
 
 @Service
 public class TeacherService {
-    @Autowired
-    private TeacherRepository teacherRepository;
+
+    private final TeacherRepository teacherRepository;
+
+    public TeacherService(TeacherRepository teacherRepository) {
+        this.teacherRepository = teacherRepository;
+    }
 
     public Teacher registerTeacher(Teacher teacher) {
         teacher.setPassword(PasswordUtil.hashPassword(teacher.getPassword()));
