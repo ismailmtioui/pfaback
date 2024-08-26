@@ -34,4 +34,7 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private Set<Video> videos;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
