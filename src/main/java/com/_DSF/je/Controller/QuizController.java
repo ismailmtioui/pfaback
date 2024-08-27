@@ -3,11 +3,11 @@ package com._DSF.je.Controller;
 import com._DSF.je.Entity.Quiz;
 import com._DSF.je.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/quizzes")
@@ -17,33 +17,34 @@ public class QuizController {
     private QuizService quizService;
 
     @GetMapping
-    public ResponseEntity<List<Quiz>> getAllQuizzes() {
-        List<Quiz> quizzes = quizService.getAllQuizzes();
-        return ResponseEntity.ok(quizzes);
+    public List<Quiz> getAllQuizzes() {
+        return quizService.getAllQuizzes();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Quiz> getQuizById(@PathVariable Long id) {
-        Quiz quiz = quizService.getQuizById(id);
-        if (quiz != null) {
-            return ResponseEntity.ok(quiz);
-        }
-        return ResponseEntity.notFound().build();
+        Optional<Quiz> quiz = quizService.getQuizById(id);
+        return quiz.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
-        Quiz createdQuiz = quizService.createQuiz(quiz);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdQuiz);
+    @PostMapping("/course/{courseId}")
+    public ResponseEntity<Quiz> createQuiz(@PathVariable Long courseId, @RequestBody Quiz quiz) {
+        try {
+            Quiz createdQuiz = quizService.createQuiz(courseId, quiz);
+            return ResponseEntity.ok(createdQuiz);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @RequestBody Quiz quiz) {
-        Quiz updatedQuiz = quizService.updateQuiz(id, quiz);
-        if (updatedQuiz != null) {
+    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @RequestBody Quiz quizDetails) {
+        try {
+            Quiz updatedQuiz = quizService.updateQuiz(id, quizDetails);
             return ResponseEntity.ok(updatedQuiz);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
