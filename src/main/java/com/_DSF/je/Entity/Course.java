@@ -31,7 +31,8 @@ public class Course {
     @JsonManagedReference
     private Set<Assignment> assignments;
 
-    @OneToMany(mappedBy = "course")
+    //@OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Quiz> quizzes;
 
     @OneToMany(mappedBy = "course")
