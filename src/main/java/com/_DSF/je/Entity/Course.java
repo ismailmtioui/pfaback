@@ -1,10 +1,11 @@
 package com._DSF.je.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Set;
-import com._DSF.je.Entity.User;
+
+//the final version
 
 @Entity
 @Getter
@@ -25,11 +26,13 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private Set<User> students;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "course")
-    private Set<Assignment> assignments;
 
     @OneToMany(mappedBy = "course")
+    @JsonManagedReference
+    private Set<Assignment> assignments;
+
+    //@OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Quiz> quizzes;
 
     @OneToMany(mappedBy = "course")

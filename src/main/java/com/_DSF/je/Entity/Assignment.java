@@ -1,5 +1,6 @@
 package com._DSF.je.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +21,7 @@ public class Assignment {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Course course;
 
     @OneToMany(mappedBy = "assignment")
