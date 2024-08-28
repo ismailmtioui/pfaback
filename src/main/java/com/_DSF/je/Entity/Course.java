@@ -1,11 +1,11 @@
 package com._DSF.je.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Set;
-import com._DSF.je.Entity.User;
+
+//the final version
 
 @Entity
 @Getter
